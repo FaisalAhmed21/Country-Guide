@@ -8,7 +8,7 @@ body {
     --elements-color: white;
     margin: 0;
     font-family: Nunito, sans-serif;
-    background-position: center; /* Center the image */
+    background-position: center;
     color: var(--text-color);
 }
 
@@ -59,17 +59,16 @@ a {
     justify-content: space-between;
 }
 
-/* Updated country-card styles to make the container rounded */
 .country-card {
     display: inline-block;
     width: 250px;
-    border-radius: 50%; /* Changed to fully rounded shape */
+    border-radius: 50%;
     overflow: hidden;
-    padding: 24px; /* Adjusted padding for rounded container */
+    padding: 24px; 
     box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.2);
     transition: all 0.2s ease-in-out;
     background-color: var(--elements-color);
-    text-align: center; /* Center text for rounded layout */
+    text-align: center; 
 }
 
 .country-card:hover {
@@ -77,11 +76,11 @@ a {
     box-shadow: 0 0 16px 0px rgba(0, 0, 0, 0.2);
 }
 
-/* Adjust image inside the country-card to be circular */
+
 .country-card img {
     width: 80px;
     height: 80px;
-    border-radius: 50%; /* Rounded image inside the container */
+    border-radius: 50%; 
     object-fit: cover;
     margin-bottom: 16px;
 }
@@ -105,13 +104,13 @@ a {
     margin-top: 16px;
     margin-bottom: 48px;
     display: flex;
-    justify-content: center; /* Center the content */
-    gap: 24px; /* Add some space between elements */
+    justify-content: center;
+    gap: 24px; 
 }
 
 .search-and-filter {
-    display: flex; /* Align items horizontally */
-    align-items: center; /* Center vertically */
+    display: flex; 
+    align-items: center;
 }
 
 .search-container {
@@ -122,7 +121,7 @@ a {
     width: 100%;
     border-radius: 4px;
     overflow: hidden;
-    background-color: #f5f5dc; /* Cream color for the search container */
+    background-color: #f5f5dc; 
     color: var(--text-color);
 }
 
@@ -139,7 +138,7 @@ a {
     color: #999;
 }
 
-/* Styles for filter by region button */
+
 .filter-by-region {
     width: 250px;
     padding: 16px;
@@ -147,14 +146,14 @@ a {
     outline: none;
     box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.15);
     border-radius: 4px;
-    background-color: lightgreen; /* Pink color for the filter button */
+    background-color: lightgreen;
     color: black;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .filter-by-region:hover {
-    background-color: white; /* Change to white on hover */
+    background-color: white; 
 }
 
 @media (max-width: 768px) {
