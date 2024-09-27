@@ -9,11 +9,9 @@ const currencies = document.querySelector('.currencies');
 const languages = document.querySelector('.languages');
 const borderCountries = document.querySelector('.border-countries');
 
-// Fetching country details from the API
 fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
   .then((res) => res.json())
   .then(([country]) => {
-    // Updating country details in the HTML
     flagImage.src = country.flags.svg;
     countryNameH1.innerText = country.name.common;
     population.innerText = country.population.toLocaleString('en-IN');
@@ -39,7 +37,6 @@ fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
       languages.innerText = Object.values(country.languages).join(', ');
     }
 
-    // Handling border countries
     if (country.borders) {
       country.borders.forEach((border) => {
         fetch(`https://restcountries.com/v3.1/alpha/${border}`)
@@ -54,7 +51,6 @@ fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
     }
   });
 
-// Theme changer functionality
 const themeChanger = document.querySelector('.theme-changer');
 const body = document.body;
 
@@ -74,7 +70,6 @@ themeChanger.addEventListener('click', () => {
     }
 });
 
-// Preserve dark mode preference across pages (localStorage)
 if (localStorage.getItem('theme') === 'dark') {
     body.classList.add('dark');
     themeChanger.innerHTML = '<i class="fa-solid fa-sun"></i>&nbsp;&nbsp;Light Mode';
