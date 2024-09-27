@@ -1,4 +1,3 @@
-/* General Styles */
 body {
     font-family: 'Nunito', sans-serif;
     margin: 0;
@@ -12,7 +11,7 @@ main {
 .header-container {
     box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.1);
     padding-inline: 24px;
-    background-color: skyblue; /* Header color */
+    background-color: skyblue;
 }
 
 .header-content {
@@ -33,31 +32,30 @@ main {
     margin: 40px auto;
 }
 
-/* Container for Country Details */
 .country-details-container {
     max-width: 1200px;
     margin-inline: auto;
     margin-top: 32px;
-    position: relative; /* Added for back button adjustment */
+    position: relative;
 }
 
-/* Back Button */
+
 .back-button {
     padding: 6px 24px;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
     border-radius: 4px;
     cursor: pointer;
-    background-color: darkred; /* Brown back button */
+    background-color: darkred; 
     font-size: 16px;
-    color: white; /* White text for contrast */
+    color: white; 
     display: inline-block;
     text-align: center;
     position: absolute;
-    top: -100px; /* Moved upwards */
-    left: -100px; /* Moved towards the left */
+    top: -100px; 
+    left: -100px; 
 }
 
-/* Country Details Layout */
+
 .country-details {
     display: flex;
     align-items: center;
@@ -65,7 +63,7 @@ main {
     margin-top: 64px;
 }
 
-/* Country Flag */
+
 .country-details img {
     width: 40%;
     border: 1px solid #ddd;
@@ -73,7 +71,7 @@ main {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Country Info Text */
+
 .details-text-container {
     flex-basis: 50%;
     display: flex;
@@ -82,24 +80,23 @@ main {
 }
 
 h1.country-name {
-    font-size: 36px; /* Increased from 32px to 36px */
+    font-size: 36px; 
     margin-bottom: 20px;
 }
 
-/* Two-Column Layout for Country Details */
+
 .details-text {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Two equal columns */
-    gap: 16px 32px; /* Gap between rows and columns */
-    margin-bottom: 32px; /* Add space below */
+    grid-template-columns: 1fr 1fr; 
+    gap: 16px 32px; 
+    margin-bottom: 32px; 
 }
 
 .details-text p {
     margin: 0;
-    font-size: 20px; /* Increased from 16px to 18px */
+    font-size: 20px; 
 }
 
-/* Border Countries */
 .border-countries {
     margin-top: 48px;
     display: flex;
@@ -112,12 +109,12 @@ h1.country-name {
     padding: 4px 16px;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
     border-radius: 4px;
-    font-size: 16px; /* Increased from 14px to 16px */
+    font-size: 16px;
     background-color: var(--elements-color);
     color: var(--text-color);
 }
 
-/* Responsive Layout */
+
 @media (max-width: 940px) {
     .country-details {
         flex-direction: column;
@@ -127,7 +124,7 @@ h1.country-name {
     }
 
     .details-text {
-        grid-template-columns: 1fr; /* Single column on smaller screens */
+        grid-template-columns: 1fr; 
         gap: 16px;
     }
 
@@ -136,9 +133,9 @@ h1.country-name {
         max-width: 400px;
     }
 
-    /* Adjust back button for smaller screens */
+
     .back-button {
-        top: 20px; /* Slightly moved back button upwards */
-        left: 20px; /* Moved towards the left */
+        top: 20px; 
+        left: 20px;
     }
 }
