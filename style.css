@@ -30,7 +30,7 @@ a {
 .header-container {
     box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.1);
     padding-inline: 24px;
-    background-color: skyblue; /* Set header color to sky blue */
+    background-color: skyblue; 
 }
 
 .header-content {
@@ -114,7 +114,7 @@ a {
 }
 
 .search-container {
-    display: flex; /* Flexbox to align input */
+    display: flex; 
     align-items: center;
     box-shadow: 0 0 8px 0px rgba(0, 0, 0, 0.15);
     max-width: 350px;
@@ -129,7 +129,7 @@ a {
     border: none;
     outline: none;
     padding: 16px;
-    width: 100%; /* Full width for the input */
+    width: 100%; /* 
     background-color: inherit;
     color: inherit;
 }
