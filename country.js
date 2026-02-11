@@ -54,31 +54,30 @@ fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
 const themeChanger = document.querySelector('.theme-changer');
 const body = document.body;
 
-themeChanger.addEventListener('click', () => {
-    body.classList.toggle('dark');
-    
-    // Change icon based on theme
-    const icon = themeChanger.querySelector('i');
-    if (body.classList.contains('dark')) {
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-        themeChanger.innerHTML = '<i class="fa-solid fa-sun"></i>&nbsp;&nbsp;Dark Mode';
-    } else {
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
-        themeChanger.innerHTML = '<i class="fa-regular fa-moon"></i>&nbsp;&nbsp;Dark Mode';
-    }
-});
-
+// Load saved theme on page load
 if (localStorage.getItem('theme') === 'dark') {
-    body.classList.add('dark');
-    themeChanger.innerHTML = '<i class="fa-solid fa-sun"></i>&nbsp;&nbsp;Light Mode';
+  body.classList.add('dark')
+  const icon = themeChanger.querySelector('i')
+  const text = themeChanger.querySelector('.theme-text')
+  icon.classList.remove('fa-moon')
+  icon.classList.add('fa-sun')
+  text.textContent = 'Light Mode'
 }
 
 themeChanger.addEventListener('click', () => {
-    if (body.classList.contains('dark')) {
-        localStorage.setItem('theme', 'dark');
-    } else {
-        localStorage.removeItem('theme');
-    }
+  body.classList.toggle('dark')
+  const icon = themeChanger.querySelector('i')
+  const text = themeChanger.querySelector('.theme-text')
+  
+  if (body.classList.contains('dark')) {
+    localStorage.setItem('theme', 'dark')
+    icon.classList.remove('fa-moon')
+    icon.classList.add('fa-sun')
+    text.textContent = 'Light Mode'
+  } else {
+    localStorage.setItem('theme', 'light')
+    icon.classList.remove('fa-sun')
+    icon.classList.add('fa-moon')
+    text.textContent = 'Dark Mode'
+  }
 });
