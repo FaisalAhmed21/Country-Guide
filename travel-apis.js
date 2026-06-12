@@ -29,7 +29,7 @@ async function getJSON(url) {
 
 // ─── Cache ────────────────────────────────────────────────────────────────────
 
-function cacheKey(id) { return `cg_v9_${String(id).toUpperCase()}` }
+function cacheKey(id) { return `cg_v10_${String(id).toUpperCase()}` }
 function getCachedGuide(id) {
   try {
     const raw = sessionStorage.getItem(cacheKey(id))
@@ -452,4 +452,29 @@ async function fetchTravelGuide(identifier, countryNameParam, preloadedCountry =
   return result
 }
 
-window.TravelAPIs = { fetchTravelGuide, getCachedGuide, fetchCountryFacts }
+async function debugClaudeTest() {
+  console.log('Testing Claude worker at:', CLAUDE_API)
+  try {
+    const res = await fetch(CLAUDE_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 100,
+        messages: [{ role: 'user', content: 'Say hello in JSON: {"message": "hello"}' }]
+      })
+    })
+    console.log('Worker HTTP status:', res.status)
+    const data = await res.json()
+    console.log('Worker response:', JSON.stringify(data))
+    if (data.content) {
+      console.log('SUCCESS - Claude is working!')
+    } else {
+      console.error('FAIL - No content in response. Error:', data.error || data)
+    }
+  } catch(e) {
+    console.error('FAIL - Fetch error:', e.message)
+  }
+}
+
+window.TravelAPIs = { fetchTravelGuide, getCachedGuide, fetchCountryFacts, debugClaudeTest }
