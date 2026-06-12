@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Countries</title>
+    <title>Country Guide</title>
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
@@ -13,7 +13,7 @@
         referrerpolicy="no-referrer"
     />
     <link
-        href="https://fonts.googleapis.com/css?family=Nunito:300,regular,500,600,700,800"
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
@@ -22,23 +22,48 @@
 <body>
     <header class="header-container">
         <div class="header-content">
-            <h2 class="title"><a href="/index.html">🌍 Explore the World</a></h2>
+            <h2 class="title">
+                <a href="index.html" class="site-logo">
+                    <span class="logo-primary">Country</span>
+                    <span class="logo-accent">Guide</span>
+                </a>
+            </h2>
             <p class="theme-changer"><i class="fa-regular fa-moon"></i>&nbsp;&nbsp;<span class="theme-text">Dark Mode</span></p>
         </div>
     </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Discover countries across every continent</h1>
+            <p>Browse population, capitals, and regions. Click a continent or search by name.</p>
+        </div>
+    </section>
+
     <main>
-        <div class="search-filter-container">
-            <select class="filter-by-region">
-                <option hidden>Find by region</option>
-                <option value="Africa">Africa</option>
-                <option value="America">America</option>
-                <option value="Asia">Asia</option>
-                <option value="Europe">Europe</option>
-                <option value="Oceania">Oceania</option>
-            </select>
+        <div class="controls">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input
+                    class="search-input"
+                    type="search"
+                    placeholder="Search for a country or capital..."
+                    aria-label="Search countries"
+                />
+            </div>
+
+            <div class="continent-filters" role="group" aria-label="Filter by continent">
+                <button class="continent-btn active" data-region="all">All</button>
+                <button class="continent-btn" data-region="Africa">Africa</button>
+                <button class="continent-btn" data-region="Americas">Americas</button>
+                <button class="continent-btn" data-region="Asia">Asia</button>
+                <button class="continent-btn" data-region="Europe">Europe</button>
+                <button class="continent-btn" data-region="Oceania">Oceania</button>
+            </div>
+
+            <p class="country-count"></p>
         </div>
-        <div class="countries-container">
-        </div>
+
+        <div class="countries-container"></div>
     </main>
 </body>
 </html>
