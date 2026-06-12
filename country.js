@@ -1,62 +1,83 @@
-const countryName = new URLSearchParams(location.search).get('name');
-const flagImage = document.querySelector('.country-details img');
-const countryNameH1 = document.querySelector('.country-details h1');
-const nativeName = document.querySelector('.native-name');
-const population = document.querySelector('.population');
-const region = document.querySelector('.region');
-const capital = document.querySelector('.capital');
-const currencies = document.querySelector('.currencies');
-const languages = document.querySelector('.languages');
-const borderCountries = document.querySelector('.border-countries');
+const API_BASE = 'https://api.geocoded.me'
 
-fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
-  .then((res) => res.json())
-  .then(([country]) => {
-    flagImage.src = country.flags.svg;
-    countryNameH1.innerText = country.name.common;
-    population.innerText = country.population.toLocaleString('en-IN');
-    region.innerText = country.region;
+const countryCode = new URLSearchParams(location.search).get('code')
+const countryName = new URLSearchParams(location.search).get('name')
 
-    if (country.capital) {
-      capital.innerText = country.capital?.[0];
-    }
+const flagImage = document.querySelector('.country-details img')
+const countryNameH1 = document.querySelector('.country-details h1')
+const nativeName = document.querySelector('.native-name')
+const population = document.querySelector('.population')
+const region = document.querySelector('.region')
+const capital = document.querySelector('.capital')
+const currencies = document.querySelector('.currencies')
+const languages = document.querySelector('.languages')
+const borderCountries = document.querySelector('.border-countries')
+const themeChanger = document.querySelector('.theme-changer')
 
-    if (country.name.nativeName) {
-      nativeName.innerText = Object.values(country.name.nativeName)[0].common;
+async function loadCountry() {
+  const identifier = countryCode || countryName
+  if (!identifier) {
+    countryNameH1.textContent = 'Country not found'
+    return
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/countries/${identifier}`)
+    if (!res.ok) throw new Error('Country not found')
+
+    const country = await res.json()
+    document.title = `${country.name} | Country Guide`
+
+    flagImage.src = country.flagUrl || `https://flagcdn.com/w640/${country.iso2.toLowerCase()}.png`
+    flagImage.alt = `${country.name} flag`
+    countryNameH1.textContent = country.name
+    nativeName.textContent = country.native || country.name
+    population.textContent = country.population.toLocaleString('en-US')
+    region.textContent = country.region || 'N/A'
+    capital.textContent = country.capital || 'N/A'
+    currencies.textContent = country.currencyName
+      ? `${country.currencyName} (${country.currency})`
+      : country.currency || 'N/A'
+    languages.textContent = country.languages?.join(', ') || 'N/A'
+
+    if (country.neighbours?.length) {
+      await renderBorderCountries(country.neighbours)
     } else {
-      nativeName.innerText = country.name.common;
+      borderCountries.innerHTML = '<b>Border Countries:</b> <span>None</span>'
     }
+  } catch {
+    countryNameH1.textContent = 'Country not found'
+    flagImage.style.display = 'none'
+  }
+}
 
-    if (country.currencies) {
-      currencies.innerText = Object.values(country.currencies)
-        .map((currency) => currency.name)
-        .join(', ');
-    }
+async function renderBorderCountries(neighbours) {
+  borderCountries.innerHTML = '<b>Border Countries:</b>'
 
-    if (country.languages) {
-      languages.innerText = Object.values(country.languages).join(', ');
-    }
+  const results = await Promise.all(
+    neighbours.map(async (code) => {
+      try {
+        const res = await fetch(`${API_BASE}/countries/${code}?fields=iso2,name`)
+        if (!res.ok) return null
+        return res.json()
+      } catch {
+        return null
+      }
+    })
+  )
 
-    if (country.borders) {
-      country.borders.forEach((border) => {
-        fetch(`https://restcountries.com/v3.1/alpha/${border}`)
-          .then((res) => res.json())
-          .then(([borderCountry]) => {
-            const borderCountryTag = document.createElement('a');
-            borderCountryTag.innerText = borderCountry.name.common;
-            borderCountryTag.href = `country.html?name=${borderCountry.name.common}`;
-            borderCountries.append(borderCountryTag);
-          });
-      });
-    }
-  });
+  results
+    .filter(Boolean)
+    .forEach((borderCountry) => {
+      const link = document.createElement('a')
+      link.textContent = borderCountry.name
+      link.href = `country.html?code=${borderCountry.iso2}`
+      borderCountries.append(link)
+    })
+}
 
-const themeChanger = document.querySelector('.theme-changer');
-const body = document.body;
-
-// Load saved theme on page load
 if (localStorage.getItem('theme') === 'dark') {
-  body.classList.add('dark')
+  document.body.classList.add('dark')
   const icon = themeChanger.querySelector('i')
   const text = themeChanger.querySelector('.theme-text')
   icon.classList.remove('fa-moon')
@@ -65,11 +86,11 @@ if (localStorage.getItem('theme') === 'dark') {
 }
 
 themeChanger.addEventListener('click', () => {
-  body.classList.toggle('dark')
+  document.body.classList.toggle('dark')
   const icon = themeChanger.querySelector('i')
   const text = themeChanger.querySelector('.theme-text')
-  
-  if (body.classList.contains('dark')) {
+
+  if (document.body.classList.contains('dark')) {
     localStorage.setItem('theme', 'dark')
     icon.classList.remove('fa-moon')
     icon.classList.add('fa-sun')
@@ -80,4 +101,6 @@ themeChanger.addEventListener('click', () => {
     icon.classList.add('fa-moon')
     text.textContent = 'Dark Mode'
   }
-});
+})
+
+loadCountry()
