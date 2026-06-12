@@ -7,7 +7,7 @@ const MEALDB_API     = 'https://www.themealdb.com/api/json/v1/1'
 const OPEN_METEO     = 'https://archive-api.open-meteo.com/v1/archive'
 const RESTCOUNTRIES  = 'https://restcountries.com/v3.1/alpha'
 const CLAUDE_API     = 'https://dawn-sound-a836.faisalahmedmahin21.workers.dev'
-const CLAUDE_MODEL   = 'claude-sonnet-4-6'
+const CLAUDE_MODEL   = 'claude-haiku-4-5-20251001'
 
 const CACHE_TTL_MS      = 6 * 60 * 60 * 1000
 const FETCH_TIMEOUT_MS  = 12000
@@ -86,20 +86,24 @@ async function askClaude(systemPrompt, userPrompt) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: CLAUDE_MODEL,
-          max_tokens: 1000,
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 2048,
           system: systemPrompt,
           messages: [{ role: 'user', content: userPrompt }]
         })
       }),
       FETCH_TIMEOUT_MS, null
     )
-    if (!res || !res.ok) return null
+    if (!res) { console.error('Claude: timed out'); return null }
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}))
+      console.error('Claude API error:', res.status, JSON.stringify(err))
+      return null
+    }
     const data = await res.json()
     const text = (data.content || []).map(b => b.text || '').join('')
-    // strip markdown fences
     return text.replace(/^```json\s*/i,'').replace(/```\s*$/,'').trim()
-  } catch { return null }
+  } catch(e) { console.error('Claude fetch error:', e); return null }
 }
 
 async function fetchClaudeAttractions(country) {
